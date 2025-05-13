@@ -1,6 +1,6 @@
 package com.trgphun.springsecurity.repository;
 
-import java.security.Permission;
+import com.trgphun.springsecurity.model.Permission;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
