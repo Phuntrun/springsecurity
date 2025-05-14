@@ -13,34 +13,42 @@ import org.springframework.web.bind.annotation.RestController;
 import com.trgphun.springsecurity.dto.request.UserRequest;
 import com.trgphun.springsecurity.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@Tag(name = "User", description = "User API")
 public class UserController {
     private final UserService userService;
 
+    @Operation(summary = "Create user", description = "Create user")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody UserRequest request) {
         return ResponseEntity.ok(userService.create(request));
     }
 
+    @Operation(summary = "Get all users", description = "Get all users")
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @Operation(summary = "Get user by id", description = "Get user by id")
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable String id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
+    @Operation(summary = "Update user", description = "Update user")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody UserRequest request) {
         return ResponseEntity.ok(userService.updateUser(id, request));
     }
 
+    @Operation(summary = "Delete user", description = "Delete user")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
