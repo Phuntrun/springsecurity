@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.trgphun.springsecurity.dto.request.PermissionRequest;
 import com.trgphun.springsecurity.dto.response.PermissionResponse;
+import com.trgphun.springsecurity.enums.ErrorCode;
+import com.trgphun.springsecurity.exception.AppException;
 import com.trgphun.springsecurity.mapper.PermissionMapper;
 import com.trgphun.springsecurity.model.Permission;
 import com.trgphun.springsecurity.repository.PermissionRepository;
@@ -35,13 +37,13 @@ public class PermissionServiceImpl implements PermissionService{
     public PermissionResponse findById(String name) {
         return permissionRepository.findById(name)
                 .map(permissionMapper::toPermissionResponse)
-                .orElseThrow(() -> new RuntimeException("Permission not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.PERMISSION_NOT_FOUND));
     }
 
     @Override
     public String update(PermissionRequest request) {
         permissionRepository.findById(request.getName())
-                .orElseThrow(() -> new RuntimeException("Permission not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.PERMISSION_NOT_FOUND));
         permissionRepository.save(permissionMapper.toPermission(request));
         return "Permission successfully updated!";
     }

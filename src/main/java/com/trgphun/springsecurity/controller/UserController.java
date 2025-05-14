@@ -15,6 +15,7 @@ import com.trgphun.springsecurity.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -26,7 +27,7 @@ public class UserController {
 
     @Operation(summary = "Create user", description = "Create user")
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody UserRequest request) {
+    public ResponseEntity<?> create(@RequestBody @Valid UserRequest request) {
         return ResponseEntity.ok(userService.create(request));
     }
 
@@ -44,7 +45,7 @@ public class UserController {
 
     @Operation(summary = "Update user", description = "Update user")
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody UserRequest request) {
+    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody @Valid UserRequest request) {
         return ResponseEntity.ok(userService.updateUser(id, request));
     }
 
