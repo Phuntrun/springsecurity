@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.trgphun.springsecurity.dto.request.RoleRequest;
 import com.trgphun.springsecurity.dto.response.RoleResponse;
+import com.trgphun.springsecurity.enums.ErrorCode;
+import com.trgphun.springsecurity.exception.AppException;
 import com.trgphun.springsecurity.mapper.RoleMapper;
 import com.trgphun.springsecurity.model.Role;
 import com.trgphun.springsecurity.repository.PermissionRepository;
@@ -40,12 +42,12 @@ public class RoleServiceImpl implements RoleService {
     public RoleResponse findById(String name) {
         return roleRepository.findById(name)
                 .map(roleMapper::toRoleResponse)
-                .orElseThrow(() -> new RuntimeException("Role not found!"));
+                .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
     }
 
     @Override
     public String update(RoleRequest request) {
-        Role role = roleRepository.findById(request.getName()).orElseThrow(() -> new RuntimeException("Role not found"));
+        Role role = roleRepository.findById(request.getName()).orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
         var permissions = permissionRepository.findAllById(request.getPermissions());
         role.setPermissions(new HashSet<>(permissions));
         roleRepository.save(role);
