@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.trgphun.springsecurity.dto.request.UserRequest;
 import com.trgphun.springsecurity.dto.response.UserRespone;
+import com.trgphun.springsecurity.enums.ErrorCode;
+import com.trgphun.springsecurity.exception.AppException;
 import com.trgphun.springsecurity.mapper.UserMapper;
 import com.trgphun.springsecurity.model.User;
 import com.trgphun.springsecurity.repository.RoleRepository;
@@ -45,7 +47,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String updateUser(String id, UserRequest request) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found!"));
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         user = userMapper.toUser(request);
         user.setRoles(new HashSet<>(roleRepository.findAllById(request.getRoles())));
         userRepository.save(user);
