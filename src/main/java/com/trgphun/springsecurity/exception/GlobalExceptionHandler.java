@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+    public ResponseEntity<String> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         ErrorCode errorCode = ErrorCode.INVALID_KEY;
         Map<String, Object> attributes = null;
         try {
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
                     .get(0).unwrap(ConstraintViolation.class);
             attributes = constraintViolation.getConstraintDescriptor().getAttributes();
         } catch (IllegalArgumentException ex) {
-
+            throw new AppException(ErrorCode.SOMETHING_WENT_WRONG);
         }
         return ResponseEntity.badRequest().body(
             Objects.nonNull(attributes) 
