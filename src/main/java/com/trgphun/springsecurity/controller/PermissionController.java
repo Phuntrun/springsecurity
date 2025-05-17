@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,14 +33,14 @@ public class PermissionController {
 
     @Operation(summary = "Create permission", description = "Create permission")
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody PermissionRequest request) {
+    public ResponseEntity<String> create(@RequestBody PermissionRequest request) {
         
         return ResponseEntity.ok(permissionService.create(request));
     }
 
     @Operation(summary = "Get all permissions", description = "Get all permissions")
     @GetMapping
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<List<PermissionResponse>> findAll() {
         return ResponseEntity.ok(permissionService.findAll());
     }
 
@@ -50,13 +52,13 @@ public class PermissionController {
     
     @Operation(summary = "Update permission", description = "Update permission")
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody PermissionRequest request) {
+    public ResponseEntity<String> update(@RequestBody PermissionRequest request) {
         return ResponseEntity.ok(permissionService.update(request));
     }
     
     @Operation(summary = "Delete permission", description = "Delete permission")
     @DeleteMapping("/{name}")
-    public ResponseEntity<?> delete(@PathVariable String name) {
+    public ResponseEntity<String> delete(@PathVariable String name) {
         permissionService.delete(name);
         return ResponseEntity.ok("Permission successfully deleted!");
     }
