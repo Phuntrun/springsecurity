@@ -14,6 +14,10 @@ public enum ErrorCode {
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "User not found!"),
     ROLE_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "Role not found!"),
     PERMISSION_NOT_FOUND(HttpStatus.BAD_REQUEST.value(), "Permission not found!"),
+    WRONG_PASSWORD(HttpStatus.BAD_REQUEST.value(), "Username or password is incorrect!"),
+    UNAUTHENTICATED(HttpStatus.UNAUTHORIZED.value(), "Unauthenticated!"),
+    SOMETHING_WENT_WRONG(HttpStatus.BAD_REQUEST.value(), "Something went wrong!"),
+    USERNAME_UNREGISTERED(HttpStatus.BAD_REQUEST.value(), "Username is not registered in system!"),
     ;
     private final int code;
     private final String message;
